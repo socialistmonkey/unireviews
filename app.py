@@ -10,6 +10,7 @@ from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", os.urandom(24))
 
 
 # Configure session to use filesystem (instead of signed cookies)
