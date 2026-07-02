@@ -87,6 +87,16 @@ def index():
     return render_template("index.html", reviews=review_data,  selected_rating=selected_rating,selected_university=selected_university)
 
 
+@app.route("/demo-login")
+def demo_login():
+    """Log straight into the seeded demo account, for the embedded portfolio preview."""
+    session.clear()
+    rows = db.execute("SELECT id FROM users WHERE username = ?", "demo")
+    if rows:
+        session["user_id"] = rows[0]["id"]
+        flash("Logged in as demo")
+    return index()
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
