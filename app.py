@@ -16,6 +16,12 @@ app.secret_key = os.environ.get("SECRET_KEY", os.urandom(24))
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+# The portfolio site embeds this app in a cross-site iframe. Browsers treat
+# the session cookie as third-party in that context, so it needs SameSite=None
+# (which itself requires Secure, i.e. HTTPS-only) to be sent on interactions
+# like the university selector or submitting a review.
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
 Session(app)
 
 # Configure CS50 Library to use SQLite database
